@@ -1,6 +1,6 @@
-# Interface — A oficina digital (versão 2)
+# Interface — Laboratório digital (versão 3)
 
-Curso de Informática Básica para Técnico em Mecânica: dez aulas de 180 minutos, 40 missões, acesso de alunos, XP e controle do professor. Visual em verde escuro inspirado na apresentação original.
+Curso universal de Informática Básica: dez aulas de 180 minutos, 80 estações de estudo, 40 missões, acesso de alunos, XP e controle do professor. Os exemplos atendem a estudos, vida cotidiana e diferentes áreas profissionais. Visual em verde escuro inspirado na apresentação original.
 
 ## Testar no computador
 
@@ -15,7 +15,7 @@ Não há senha padrão. No modo local, os registros ficam em `.local/classroom.j
 
 ## Publicar na Vercel
 
-A versão 2 tem uma parte de servidor. Abrir index.html diretamente ou publicar só dist não registra os alunos. Envie o projeto completo, incluindo api e lib.
+A aplicação tem uma parte de servidor. Abrir index.html diretamente ou publicar só dist não registra os alunos. Envie o projeto completo, incluindo api e lib.
 
 1. Crie um projeto Supabase em uma conta sua.
 2. No SQL Editor, execute o arquivo **database/schema.sql**. Ele cria as tabelas, índices, proteção de acesso direto e limite de tentativas.
@@ -35,7 +35,7 @@ Você pode gerar SESSION_SECRET no seu computador com `node -e "console.log(requ
 6. Publique ou faça um novo deploy depois de configurar as variáveis. Acesse **Sou professor**, crie a turma e confira primeiro com um aluno de teste.
 7. Teste: aula fechada, liberação, entrega, aprovação, saída e retorno em outro dispositivo.
 
-O banco real ainda precisa ser criado/configurado na sua conta. Esta entrega não realizou publicação nem validou uma conexão real com Supabase. Sem configuração, a produção recusa o acesso aos registros em vez de usar um armazenamento temporário. Os dados locais não migram automaticamente ao banco remoto.
+Para uma instalação nova, o banco precisa ser criado e configurado na sua conta. Se a versão anterior já está funcionando, preserve o mesmo projeto Supabase e as quatro variáveis da Vercel; esta atualização não exige executar SQL novamente. A nova versão foi verificada localmente, sem alterar sua publicação. Sem configuração, a produção recusa o acesso aos registros em vez de usar um armazenamento temporário. Os dados locais não migram automaticamente ao banco remoto.
 
 ## Como funciona para o aluno
 
@@ -68,15 +68,15 @@ A liberação é manual pelo professor; não há agenda automática por data. A 
 
 | Aula | Conteúdo | Laboratório principal |
 | --- | --- | --- |
-| 1 | Evolução, CPU, memória e periféricos | Painel traseiro com seis cabos arrastáveis ou conectáveis por clique |
+| 1 | Evolução, hardware/software, CPU, memória, dados e periféricos | Linha do tempo, componentes, CPU, salvamento, bits, periféricos e jogo de cabos |
 | 2 | Windows, janelas, pastas e arquivos | Explorador simulado para organizar documentos da oficina |
-| 3 | Editor de texto | Ordem de serviço com lista, destaque e prévia do documento |
+| 3 | Editor de texto | Comunicado de atividade com lista, destaque e prévia |
 | 4 | Planilha, quatro operações, SOMA e MÉDIA | Orçamento e fórmulas com referências de células |
-| 5 | SE, SOMASE e PROCV | Inspeção, horas por categoria e catálogo de peças |
+| 5 | SE, SOMASE e PROCV | Acompanhamento por condição, horas por categoria e catálogo de produtos |
 | 6 | Conceitos e criação de macros | Sequência de blocos com simulação do relatório |
 | 7 | Slides, texto, imagens e vídeo | Construtor de três slides com prévia e exportação HTML |
 | 8 | Apresentação de tema livre | Projeto, registro de ensaio e feedback para avaliação docente |
-| 9 | Banco de dados | Construtor de tabela e consulta de estoque fictício |
+| 9 | Banco de dados | Construtor de tabela e consulta de catálogo fictício |
 | 10 | Revisão e avaliação | Desafios integrados e registro separado da nota oficial |
 
 Os laboratórios são simuladores didáticos. Não substituem Word, Excel, PowerPoint, Windows ou um gerenciador de banco completo. As atividades para os aplicativos reais, os tempos e as adaptações estão em **GUIA-DO-PROFESSOR.md**. As fórmulas do laboratório usam português e `;`; PROCV usa correspondência exata. Não há execução de VBA ou de SQL enviado por alunos. O vídeo é um link HTTPS aberto em nova aba. Textos e slides podem ser baixados em HTML, não em DOCX/PPTX.
@@ -87,14 +87,17 @@ A Prova Padrão Grau Técnico não foi fornecida. A aula 10 oferece uma revisão
 
 - `npm run check`: sintaxe dos arquivos da aplicação.
 - `npm test`: conteúdo, fórmulas, todas as 40 missões, bloqueios, contas, XP idempotente, devolutivas, isolamento entre alunos, reinício e recuperação de PIN.
-- `npm run build`: gera dist com somente index.html, course.css e course-app.js. Conteúdo das aulas e correção ficam em lib, usados pela API.
+- `npm run build`: gera dist com somente index.html, course.css, course-app.js, study.js e study.css. Conteúdo das aulas e correção ficam em lib, usados pela API.
 - Com o servidor aberto, `node tests/http-smoke.cjs`: verifica HTTP, origem, sessão e bloqueio de arquivos privados, sem criar conta.
 
-Os testes locais de lógica e HTTP passaram. A revisão visual no navegador não pôde ser executada porque a ferramenta de navegação deste ambiente falhou ao iniciar. A conexão com o Supabase de produção depende da configuração e de um teste real após a publicação.
+A verificação inclui testes de conteúdo, correção, contas, bloqueios e preservação de progresso. A versão 3 também foi inspecionada no navegador em tela normal e em 390 × 844, com testes de CPU, salvamento e bits. O servidor visual de teste usa dados fictícios isolados. Sua publicação e seus registros de produção não foram alterados.
 
 ## Arquivos principais
 
-- index.html, course.css, course-app.js: interface.
+- index.html, course.css, course-app.js: interface principal.
+- study.js e study.css: leitor de aulas e laboratórios livres.
+- lib/learning.cjs: oitenta estações, explicações, exemplos, práticas e roteiro.
+- lib/universal.cjs: adaptação do conteúdo, preservando IDs de missão e XP.
 - lib/course.cjs: currículo, textos, tempos e missões.
 - lib/grader.cjs e lib/formula.cjs: correção e interpretador limitado.
 - lib/service.cjs, lib/store.cjs, api/index.js: contas, autorização, persistência e API.
@@ -114,3 +117,11 @@ Os arquivos app.js, content.js, style.css e verify.cjs da versão inicial foram 
 - Supabase, proteção do banco: https://supabase.com/docs/guides/database/postgres/row-level-security
 - Supabase, chaves de API: https://supabase.com/docs/guides/getting-started/api-keys
 - Vercel, execução das funções: https://vercel.com/docs/functions/runtimes
+
+## Atualização da versão 3
+
+Leia ATUALIZAR.md antes de substituir a publicação. O curso é comum a todos os grupos de acesso. A estrutura do banco, os códigos pessoais, os IDs das quarenta missões e seus valores de XP permanecem os mesmos (4.400 XP possíveis). As oitenta estações ampliam o estudo sem criar recompensas duplicadas.
+
+Cada aula oferece oito blocos com tempos que somam 180 minutos, incluindo pausa, leitura comentada, demonstração e prática. A Aula 1 tem cerca de duas mil palavras de material e seis laboratórios livres, além do jogo de cabos e demais missões. Os tempos são sugestões de condução: somente ler o material não ocupa três horas.
+
+O caderno e o marcador de estações exploradas ficam no navegador. O XP e as entregas continuam no servidor. Use Começar a aula, percorra as estações e depois faça as missões com XP. O modo guiado oferece apoio e o modo autônomo propõe aprofundamento.
